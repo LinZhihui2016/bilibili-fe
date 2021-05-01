@@ -1,0 +1,34 @@
+@import "base";
+/* 改变主题色变量 */
+$--color-primary: $color-primary;
+$--color-white: $color-1;
+$--color-black: $color-10;
+$--background-color-base: $color-bg;
+$--color-success: #67C23A;
+$--color-warning: #E6A23C;
+$--color-danger: #F56C6C;
+$--color-info: #909399;
+$--color-text-primary: $color-primary;
+$--color-text-regular: $color-9;
+$--color-text-secondary: $color-6;
+$--color-text-placeholder: #C0C4CC;
+$--border-color-base: $color-5;
+$--border-color-light: lighten($color-5, 5%);
+$--border-color-lighter: lighten($color-5, 10%);
+$--border-color-extra-light: lighten($color-5, 15%);
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-plus/lib/theme-chalk/fonts';
+@import "~element-plus/packages/theme-chalk/src/index";
+
+@include b(table) {
+  @include m(striped) {
+    & .#{$namespace}-table__body {
+      & tr.#{$namespace}-table__row--striped {
+        td {
+          background: $color-2;
+        }
+      }
+    }
+  }
+}
