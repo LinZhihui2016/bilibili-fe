@@ -1,4 +1,3 @@
-import icon from "@/assets/favicon.ico";
 export const setupIcon = () => {
   const { VITE_ICON } = import.meta.env;
   if (VITE_ICON) {
@@ -12,6 +11,6 @@ export const setupIcon = () => {
   }
   const link = document.createElement("link");
   link.rel = "icon";
-  link.href = icon;
+  // link.href = icon;
   document.head.appendChild(link);
 };
