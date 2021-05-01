@@ -100,7 +100,7 @@ export default defineComponent({
         run()
       },
       onFans: (row: VideoSql) => {
-        apiVideoFans(row.id, +!row.isFans).then(res => {
+        apiVideoFans(row.id!, +!row.isFans).then(res => {
           if (res.status) {
             row.isFans = +!row.isFans
             $success(res.data)

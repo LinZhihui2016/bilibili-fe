@@ -86,7 +86,7 @@ export default defineComponent({
       result, run, page, pageCount: computed(() => result.value ? result.value.totalPage : 1),
       total: computed(() => result.value ? result.value.total : 0),
       onFans: (row: UpSql) => {
-        apiUpFans(row.id, +!row.isFans).then(res => {
+        apiUpFans(row.id!, +!row.isFans).then(res => {
           if (res.status) {
             row.isFans = +!row.isFans
             $success(res.data)

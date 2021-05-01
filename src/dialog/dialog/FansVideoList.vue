@@ -62,10 +62,11 @@
 import { computed, defineComponent } from "vue";
 import { useNumber } from "@/hooks";
 import { useRequest } from "@/hooks/useRequest";
-import { apiVideoFansList } from "@/api/video";
+import { apiVideoFans, apiVideoFansList, VideoSql } from "@/api/video";
 import BImage from "@components/BImage.vue";
 import BVideoLink from "@components/BVideoLink.vue";
 import BUpLink from "@components/BUpLink.vue";
+import { $success } from "@/utils";
 
 export default defineComponent({
   name: "fansVideoList",
@@ -79,6 +80,14 @@ export default defineComponent({
     return {
       result, run, page, pageCount: computed(() => result.value ? result.value.totalPage : 1),
       total: computed(() => result.value ? result.value.total : 0),
+      onFans: (row: VideoSql) => {
+        apiVideoFans(row.id!, +!row.isFans).then(res => {
+          if (res.status) {
+            row.isFans = +!row.isFans
+            $success(res.data)
+          }
+        })
+      },
     }
   }
 });

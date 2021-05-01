@@ -101,7 +101,7 @@ export default defineComponent({
         run()
       },
       onFans: (row: UpSql) => {
-        apiUpFans(row.id, +!row.isFans).then(res => {
+        apiUpFans(row.id!, +!row.isFans).then(res => {
           if (res.status) {
             row.isFans = +!row.isFans
             $success(res.data)

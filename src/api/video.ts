@@ -5,6 +5,7 @@ import { Order } from "@/utils";
 export interface VideoSqlBase {
   bvid: string,
   isFans?: number
+  id?: number
   fans_time?: string
 }
 
