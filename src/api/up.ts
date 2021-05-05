@@ -24,8 +24,9 @@ export interface UpSql {
   updated?: string
   created?: string
   isFans?: number
-  fans_time?:string
+  fans_time?: string
 }
+
 export type UpList = Type.ListApi<UpSql>
 
 export const apiUpInfo = (bv: string) => $$('/up/info', { bv })
@@ -40,3 +41,4 @@ export const apiUpList = (page: number, pageSize: number, sort?: string, orderby
 
 export const apiUpFans = (id: number, status: number) => $$('/up/fans', { id, status }, { method: "POST", msg: true })
 
+export const apiUpChart = (key: string) => $$<Type.Res<UpSql[]>>('/up/chart', { key })

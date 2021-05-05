@@ -1,8 +1,9 @@
 <template>
   <li ref="dom" :i="id" v-show="show" class="dialog-item" :style="style" :class="classList" @click.capture="onTop">
     <div class="dialog-item-title-container not-select">
-      <div class="dialog-item-title" @mousedown="onMouseDown" @mouseup="onMouseUp">{{ config.title }}</div>
+      <div class="dialog-item-title">{{ config.title }}</div>
       <el-space>
+        <span class="el-icon-rank icon" @click="onMouseDown"></span>
         <span class="el-icon-minus icon" @click="onHide"></span>
         <span class="el-icon-close icon" @click="onClose"></span>
       </el-space>
@@ -13,6 +14,9 @@
     <ul class="dialog-angle">
       <li v-for="i in 4" :key="i"></li>
     </ul>
+    <div class="dialog-position" v-show="isDrag">
+      x:{{ left }} y:{{ top }}
+    </div>
   </li>
 </template>
 
@@ -48,22 +52,39 @@ export default defineComponent({
     const mouseMove = (e: MouseEvent) => {
       if (!isDrag.value) return
       const { x, y, left, top } = start.value
-      setLeft(left + e.x - x)
-      setTop(top + e.y - y)
+      const $left = left + e.x - x
+      const $top = top + e.y - y
+      const maxLeft = window.innerWidth - dom.value!.clientWidth
+      const maxTop = window.innerHeight - dom.value!.clientHeight
+      if ($left < 0) {
+        setLeft(1)
+      } else if ($left > maxLeft) {
+        setLeft(maxLeft)
+      } else {
+        setLeft($left)
+      }
+      if ($top < 0) {
+        setTop(1)
+      } else if ($top > maxTop) {
+        setTop(maxTop)
+      } else {
+        setTop($top)
+      }
     }
     const onMouseUp = () => {
       setDrag(false)
       document.documentElement.removeEventListener('mousemove', mouseMove)
+      document.documentElement.removeEventListener('click', onMouseUp)
+      document.documentElement.removeEventListener('keyup', onEsc)
     }
     const onEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onMouseUp()
-        document.documentElement.removeEventListener('keyup', onEsc)
       }
     }
     return {
-      dom,
-      dialogName,
+      dom, isDrag,
+      dialogName, left, top,
       onHide: () => $dialog.toggle(prop.id),
       onClose: () => $dialog.close(prop.id),
       onTop: () => $dialog.top(prop.id),
@@ -84,13 +105,16 @@ export default defineComponent({
         }
       }),
       onMouseDown: (e: MouseEvent) => {
+        if (isDrag.value) return;
         $dialog.top(prop.id)
         const li = dom.value!
         const { offsetLeft, offsetTop } = li
         const { x, y } = e
         setStart({ x, y, left: offsetLeft, top: offsetTop })
         setDrag(true)
+        e.stopPropagation();
         document.documentElement.addEventListener('mousemove', mouseMove)
+        document.documentElement.addEventListener('click', onMouseUp)
         document.documentElement.addEventListener('keyup', onEsc)
       },
       onMouseUp
@@ -130,6 +154,14 @@ export default defineComponent({
     bottom: -1px;
     border-top: 0;
   }
+}
+
+.dialog-position {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  font-size: 12px;
+  color: $color-10;
 }
 
 .dialog-item {
@@ -180,6 +212,10 @@ export default defineComponent({
   flex-direction: column;
   padding: 0 20px 10px;
 
+  &.drag {
+    cursor: move !important;
+  }
+
   .dialog-item-title-container {
     padding: 8px 0 4px;
     height: 32px;
@@ -192,8 +228,12 @@ export default defineComponent({
     .icon {
       cursor: pointer;
 
+      &.el-icon-rank {
+        cursor: move;
+      }
+
       &:hover {
-        color: $color-1
+        color: $color-10
       }
     }
 
@@ -208,12 +248,8 @@ export default defineComponent({
   }
 
   .dialog-item-title {
+    font-size: 16px;
     flex: 1;
-    cursor: pointer;
-  }
-
-  &.drag .dialog-item-title {
-    cursor: move;
   }
 
   .dialog-content {

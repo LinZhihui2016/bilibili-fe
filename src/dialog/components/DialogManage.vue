@@ -45,6 +45,7 @@ export default defineComponent({
   position: fixed;
   top: 0;
   left: 0;
+  padding: 10px 20px 0;
   width: 100vw;
   overflow-x: auto;
 

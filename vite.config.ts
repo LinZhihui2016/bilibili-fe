@@ -10,7 +10,7 @@ const alias: AliasOptions = [
   { find: "@css", replacement: pathResolver("./src/css") },
   { find: "@pages", replacement: pathResolver("./src/pages") },
   { find: "@utils", replacement: pathResolver("./src/utils") },
-  { find: /^~/, replacement: "" }
+  { find: /^~/, replacement: "" },
 ];
 
 // https://vitejs.dev/config/

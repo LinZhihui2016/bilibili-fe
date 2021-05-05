@@ -13,11 +13,11 @@ export interface VideoSqlBase_ extends VideoSqlBase {
   aid: number,
   title: string,
   pic: string,
-  view: number,
+  views: number,
   danmaku: number
   reply: number,
   coin: number,
-  like: number
+  likes: number
   up_mid: number,
   up_name: string
   updated?: string
@@ -42,7 +42,7 @@ export interface DeletedVideoSql extends VideoSqlBase {
   type: 'deleted',
 }
 
-export type VideoSql = NormalVideoSql | BangumiVideoSql | DeletedVideoSql
+export type VideoSql = NormalVideoSql | BangumiVideoSql
 
 export interface RankSql {
   updated?: string
@@ -59,11 +59,11 @@ export interface VideoLogSql {
   updated?: string
   created?: string
   id?: number
-  view: number,
+  views: number,
   danmaku: number
   reply: number,
   coin: number,
-  like: number
+  likes: number
   video_id: number
   date: number
 }
@@ -87,3 +87,5 @@ export const apiVideoFans = (id: number, status: number) => $$('/video/fans', { 
   msg: true
 })
 
+
+export const apiVideoChart = (key: string) => $$<Type.Res<VideoSql[]>>('/video/chart', { key })

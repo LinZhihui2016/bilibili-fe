@@ -29,8 +29,8 @@ body,
 html {
   width: 100%;
   -webkit-overflow-scrolling: touch;
-  background: radial-gradient($color-primary, $color-bg);
-  color: #333;
+  background: radial-gradient($color-4, $color-bg) no-repeat fixed;
+  color: $color-10;
   font-size: 14px;
 }
 
