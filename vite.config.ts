@@ -15,6 +15,10 @@ const alias: AliasOptions = [
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "https://static.linzhihui.online/",
+  build:{
+    assetsDir:"bilibili",
+  },
   plugins: [vue()],
   optimizeDeps: {
     include: ["element-plus/lib/locale/lang/zh-cn"]
