@@ -1,6 +1,7 @@
 import { AliasOptions, defineConfig, } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
+import process from 'child_process';
 
 const pathResolver = (path: string) => resolve(__dirname, ".", path);
 
@@ -12,7 +13,6 @@ const alias: AliasOptions = [
   { find: "@utils", replacement: pathResolver("./src/utils") },
   { find: /^~/, replacement: "" },
 ];
-
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
@@ -22,5 +22,19 @@ export default defineConfig({
   resolve: { alias },
   server: {
     port: 8809
+  },
+  build:{
+    rollupOptions:{
+      plugins:[
+        {
+          name:"close",
+          closeBundle:()=>{
+            process.exec('oss_bili',(err,stdout)=>{
+              console.log(stdout)
+            })
+          }
+        }
+      ]
+    }
   }
 });
