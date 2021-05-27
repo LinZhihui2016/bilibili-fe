@@ -4,7 +4,6 @@ import { resolve } from "path";
 import process from 'child_process';
 
 const pathResolver = (path: string) => resolve(__dirname, ".", path);
-const argv = process.argv;
 const alias: AliasOptions = [
   { find: "@", replacement: pathResolver("./src") },
   { find: "@components", replacement: pathResolver("./src/components") },
