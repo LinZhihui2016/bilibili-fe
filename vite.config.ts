@@ -16,9 +16,6 @@ const alias: AliasOptions = [
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "https://static.linzhihui.online/",
-  build:{
-    assetsDir:"bilibili",
-  },
   plugins: [vue()],
   optimizeDeps: {
     include: ["element-plus/lib/locale/lang/zh-cn"]
@@ -28,6 +25,7 @@ export default defineConfig({
     port: 8809
   },
   build:{
+    assetsDir:"bilibili",
     rollupOptions:{
       plugins:[
         {
