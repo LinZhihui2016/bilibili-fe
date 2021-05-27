@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit --skipLibCheck && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "build:cdn": "vue-tsc --noEmit --skipLibCheck && vite build --cdn"
   },
   "dependencies": {
     "@types/echarts": "^4.9.7",

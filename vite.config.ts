@@ -1,10 +1,10 @@
 import { AliasOptions, defineConfig, } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
-import process from 'child_process';
+import chilc_process from 'child_process';
 
 const pathResolver = (path: string) => resolve(__dirname, ".", path);
-
+const argv = process.argv;
 const alias: AliasOptions = [
   { find: "@", replacement: pathResolver("./src") },
   { find: "@components", replacement: pathResolver("./src/components") },
@@ -31,7 +31,7 @@ export default defineConfig({
         {
           name:"close",
           closeBundle:()=>{
-            process.exec('oss_bili',(err,stdout)=>{
+            argv.includes("--cdn") && chilc_process.exec('oss_bili',(err,stdout)=>{
               console.log(stdout)
             })
           }
